@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Main;
+import Control.ControlerIMC;
+import View.IMCV;
+import Model.ModelIMC;
+/**
+ *
+ * @author hugo
+ */
+public class PrubaIMC {
+    
+    public static void main(String[] args) {
+                ModelIMC modelo = new ModelIMC();
+        IMCV vista = new View.IMCV();
+        ControlerIMC control = new ControlerIMC(modelo, vista);
+        
+        control.iniciar();
+        vista.setVisible(true);
+        
+    }
+    
+    
+
+}
