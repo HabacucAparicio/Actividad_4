@@ -1,0 +1,146 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Model;
+
+import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.text.DecimalFormat;
+import java.util.Scanner;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+/**
+ *
+ * @author hugo
+ */
+public class ModelIMC {
+   
+   // FileReader fr;
+    //File file;
+    //BufferedReader br;
+    //String contenido;
+    String rutar = null;
+    String rutaGuardar = "C:\\prueba\\archivo.txt";
+    
+        public String  abrirArchivo(){
+            int opcion; //Respueta del usuaio aceptr/cancelar
+            String rutar = null;
+            JFileChooser jfch = new JFileChooser();
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("",".txt");
+            jfch.setFileFilter(filtro);
+            opcion = jfch.showOpenDialog(null);
+            if(opcion == JFileChooser.APPROVE_OPTION){
+                
+                
+                File f =jfch.getSelectedFile();
+                rutar = f.getAbsolutePath();
+                
+            }
+            //file = new File(ruta);
+            //rutaGuardar =ruta;
+            
+            //fr = new FileReader(file);
+            return rutar;
+        
+    }
+ public String leer (String tutar) throws FileNotFoundException{
+     Scanner 
+     arc = new Scanner(new File(tutar));
+     String nombre;
+     String res="";
+     float peso,est,imc;
+     while (arc.hasNext()){
+            nombre = arc.next();
+            peso = arc.nextFloat();
+            est = arc.nextFloat();
+            imc = peso/(est*est ); 
+            DecimalFormat df = new DecimalFormat("#.00");
+            String cadenaImc = df.format(imc);
+                        
+           res+= " Nombre: "+nombre+" Peso : "+peso+" Estatura : "+est+" IMC "+imc+"\n";
+        } 
+     return res ;
+ }       
+        
+    
+public String Suma () throws FileNotFoundException{
+     Scanner 
+     arc = new Scanner(new File("C:\\prueba\\suma.txt"));
+        PrintStream save;
+        int suma;
+        
+        save = new PrintStream(rutaGuardar);
+           
+        String nombre,res="";
+        String nombreMay = "",nombreMen="";
+        float peso,est,imc;
+        float imcMay =0,imcMin=0;
+        float sumImc = 0,prom;
+        int cont = 1,mens =1;
+        
+ while (arc.hasNext()){
+            nombre = arc.next();
+            
+            peso = arc.nextFloat();
+            est = arc.nextFloat();
+            imc = peso/(est*est );
+           
+  
+            DecimalFormat df = new DecimalFormat("#.00");
+            String cadenaImc = df.format(imc);
+            
+            if(imc>imcMay){
+                imcMay=imc;
+                nombreMay = nombre;
+            }
+            
+            while(mens==1){
+                imcMin = imc;
+                mens =2;
+            }
+            
+            if(imc<imcMin){
+                imcMin = imc;
+                nombreMen = nombre;
+            }
+            res += " Nombre: "+nombre+" Peso : "+peso+" Estatura : "+est+" IMC "+imc+"\n";
+            save.println(cont+" Nombre: "+nombre+" Peso : "+peso+" Estatura : "+est+" IMC "+imc);
+            sumImc += imc;
+            cont++;
+            
+        } 
+    
+ prom=sumImc/(cont-1);
+ DecimalFormat df = new DecimalFormat("#.00");
+ 
+ 
+ String cadenaProm = df.format(prom);
+ save.println("");
+  save.println("Promedio: "+cadenaProm);
+  save.println("");
+  save.println("Imc mas alto: "+nombreMay+" "+imcMay);
+   save.println("");
+  save.println("IMC mas bajo : "+nombreMen+" "+imcMin);
+  res +="Promedio: "+cadenaProm+"\nImc mas alto: "+nombreMay+" "+imcMay+"IMC mas bajo : "+nombreMen+" "+imcMin;
+  
+  return res;
+    
+}    
+
+    
+    
+    
+    
+    
+}
