@@ -1,0 +1,68 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Control;
+
+import View.IMCV;
+import Model.ModelIMC;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+public class ControlerIMC implements ActionListener{
+    
+    private ModelIMC model;
+    private IMCV view;
+
+    public ControlerIMC(ModelIMC model, IMCV view) {
+        this.model = model;
+        this.view = view;
+    }
+    
+       public void iniciar(){
+       view.setTitle("IMC Calculadora");
+       view.getBtnAbrir().addActionListener(this);
+       view.getBtnCalcular().addActionListener( this);
+       view.getBtnGuardar().addActionListener( this);
+   } 
+       
+     public void actionPerformed(ActionEvent e) {  
+         
+         if(e.getSource()== view.getBtnAbrir()){
+             String ruta;
+             String ao;
+            ruta = model.abrirArchivo();
+            view.getTxtAbrir().setText(ruta);
+             try {
+                 ao = model.leer(ruta);
+                 view.getTxtOriginal().setText(ao);
+                 
+                 
+             } catch (FileNotFoundException ex) {
+                 JOptionPane.showMessageDialog(null, "Archivo no encontrado");
+             }
+             view.getTxtGuardar().setText("C:\\prueba\\archivo.txt");
+             
+         }if(e.getSource()== view.getBtnCalcular()){
+             String mos;
+             try {
+                 mos = model.Suma();
+                 view.getTxtCopia().setText(mos);
+             } catch (FileNotFoundException ex) {
+                 JOptionPane.showMessageDialog(null, "Archivo no encontrado");
+             }
+             
+         }
+         
+     }
+       
+       
+    
+    
+}
